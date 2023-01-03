@@ -1,0 +1,101 @@
+# Initialize Pygame
+pygame.init()
+
+# Set the window size
+window_size = (500, 500)
+
+# Create the window
+screen = pygame.display.set_mode(window_size)
+
+# Set the title of the window
+pygame.display.set_caption("Flappy Bird")
+
+# Set the bird's starting position
+bird_x = 50
+bird_y = 250
+
+# Set the bird's gravity
+gravity = 0.5
+
+# Set the bird's lift
+lift = -10
+
+# Set the bird's velocity
+velocity = 0
+
+# Set the bird's terminal velocity
+terminal_velocity = 20
+
+# Set the bird's initial jump velocity
+jump_velocity = 10
+
+# Set the bird's initial score
+score = 0
+
+# Set the background image
+background_image = pygame.image.load("background.png")
+
+# Set the bird image
+bird_image = pygame.image.load("bird.png")
+
+# Set the pipe image
+pipe_image = pygame.image.load("pipe.png")
+
+# Set the font for the score
+font = pygame.font.Font(None, 36)
+
+# Set the pipe's starting position
+pipe_x = 500
+pipe_y = 0
+
+# Set the pipe's velocity
+pipe_velocity = -5
+
+# Set the space between pipes
+pipe_gap = 150
+
+# Set the minimum and maximum heights for the pipes
+min_pipe_height = 100
+max_pipe_height = 400
+
+# Set the game over flag
+game_over = False
+
+# Run the game loop
+while not game_over:
+    # Handle events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game_over = True
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                velocity = jump_velocity
+    
+    # Update the bird's position
+    velocity += gravity
+    bird_y += velocity
+    
+    # Check if the bird has hit the ground
+    if bird_y > 500:
+        game_over = True
+    
+    # Update the pipe's position
+    pipe_x += pipe_velocity
+    
+    # Check if the pipe has passed the bird
+    if pipe_x < bird_x and not game_over:
+        score += 1
+    
+    # Check if the pipe has gone off the screen
+    if pipe_x < -100:
+        pipe_x = 500
+        pipe_y = 0
+    
+    # Draw the background
+    screen.blit(background_image, (0, 0))
+    
+    # Draw the pipe
+    screen.blit(pipe_image, (pipe_x, pipe_y))
+    
+    # Draw the bird
+    screen
